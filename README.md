@@ -6,7 +6,7 @@ This source code is tested with Python3.8 on Ubuntu20.04.
 ## Step 1\:Clone the GitHub repository
 
 ```bash
-git clone https://github.com/MingYRD/Piano
+git clone https://github.com/MLMIP/PIANO.git
 cd PIANO
 ```
 

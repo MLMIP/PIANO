@@ -17,7 +17,7 @@ Before installing the relevant dependency packages, please make sure Anaconda3 h
 source install.sh
 ```
 
-The script file, executed directly with `install.sh`, will automatically install the Anaconda virtual environment. If Anaconda is not already installed, the script will first install Anaconda and then proceed to install the necessary dependencies on top of it. Upon completion, a virtual environment named "piano" will be created.
+The script file, executed directly with `install.sh`, will automatically install the Anaconda virtual environment. If Anaconda is not already installed, the script will first install Anaconda and then proceed to install the necessary dependencies on top of it. Upon completion, a virtual environment named "piano" will be created. In addition, the model weights can be obtained through Zenodo-PIANO.
 
 ## Step 3\:Download required software
 

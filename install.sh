@@ -1,7 +1,3 @@
-if [ ! -f "piano/Data/model_params/piano_model.pkl" ];
-then
-	wget -P piano/Data/model_params/ https://zenodo.org/api/records/10512324/files-archive   # need to 
-fi
 
 conda create -n piano python==3.8 -y
 

@@ -17,7 +17,7 @@ Before installing the relevant dependency packages, please make sure Anaconda3 h
 source install.sh
 ```
 
-The script file, executed directly with `install.sh`, will automatically install the Anaconda virtual environment. If Anaconda is not already installed, the script will first install Anaconda and then proceed to install the necessary dependencies on top of it. Upon completion, a virtual environment named "piano" will be created. In addition, the model weights can be obtained through [Zenodo-PIANO](https://doi.org/10.5281/zenodo.10551028).After downloading, place it in piano/Data/model_params.
+Executing the above command will automatically install the Anaconda virtual environment. Upon completion, a virtual environment named "piano" will be created. In addition, the model weights can be obtained through [Zenodo-PIANO](https://doi.org/10.5281/zenodo.10551028). After downloading, place it in piano/Data/model_params.
 
 ## Step 3\:Download required software
 
@@ -55,7 +55,7 @@ If you want to obtain the prediction results of a single sample, directly execut
 python run.py 0 [pdb name] [mut_chain] [wildtype] [mutant] [resid] [partnerA_partnerB]
 ```
 
-Where \[pdb name] is the name of the complex to be predicted, such as 1a4y. \[mut\_chain] is the name of the mutated chain. \[wildtype], \[mutant], and \[resid] are respectively the wild-type amino acid, the mutant amino acid, and the position where the mutation occurs. \[partnerA\_partnerB] describes the two interaction partners in the protein complex, such as A\_B.
+where \[pdb name] is the name of the complex to be predicted, such as 1a4y. \[mut\_chain] is the name of the mutated chain. \[wildtype], \[mutant], and \[resid] are wild-type amino acid, mutant amino acid, and the mutation position, respectively. \[partnerA\_partnerB] describes the two interaction partners in the protein complex, such as A\_B.
 
 A specific example is:
 

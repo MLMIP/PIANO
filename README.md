@@ -17,7 +17,7 @@ Before installing the relevant dependency packages, please make sure Anaconda3 h
 source install.sh
 ```
 
-Executing the above command will automatically install the Anaconda virtual environment. Upon completion, a virtual environment named "piano" will be created. In addition, the model weights can be obtained through [Zenodo-PIANO](https://doi.org/10.5281/zenodo.10551028). After downloading, place it in piano/Data/model_params.
+Executing the above command will automatically install the Anaconda virtual environment. Upon completion, a virtual environment named "piano" will be created. In addition, the model weights can be obtained through [Zenodo-PIANO](https://doi.org/10.5281/zenodo.10554715). After downloading, place it in piano/Data/model_params.
 
 ## Step 3\: Download required software
 

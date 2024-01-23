@@ -351,7 +351,7 @@ def no_perturbation(tar_pdb, res_phi_chem, atom_dict,
     return True
 
 
-def main_p():
+def main():
 
     # get xr angles
     res2atom = {'ALA': ['C', 'N', 'O', 'CA', 'CB'],
@@ -461,6 +461,6 @@ def main_p():
 
 
 
-main_p()
+main()
     
 

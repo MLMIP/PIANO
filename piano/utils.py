@@ -222,7 +222,7 @@ def interface_features(if_info, tar_pdb, chainid):
 
     workdir = 'temp'
 
-    os.system("python piano/gen_interface.py {} {} {} > {}/pymol_{}.log".format(
+    os.system("python piano/generate_interface.py {} {} {} > {}/pymol_{}.log".format(
         pdbfile, if_info, workdir, workdir, tar_pdb))
     interface_file = '{}/interface_{}.txt'.format(workdir, tar_pdb)
 

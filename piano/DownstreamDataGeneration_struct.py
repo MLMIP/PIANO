@@ -343,10 +343,10 @@ def no_perturbation(tar_pdb, res_phi_chem, atom_dict,
         if not exi_flag:
             continue
         mut_detail = mut_before_res+mut_chain+mut_ind+mut_after_res
-        index = 'piano/Data/DStruData' + '/' + tar_pdb+'_'+mut_detail + '_' + 'index_dict.pt'
+        index = 'piano/Data/DStructData' + '/' + tar_pdb+'_'+mut_detail + '_' + 'index_dict.pt'
         torch.save(res_atom_num, index)
 
-        gb_pos_64(p_features_atom, p_features_res, 'piano/Data/DStruData', tar_pdb+'_'+mut_detail)       
+        gb_pos_64(p_features_atom, p_features_res, 'piano/Data/DStructData', tar_pdb+'_'+mut_detail)       
         
     return True
 

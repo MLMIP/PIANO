@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import torch.nn.init as init
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(BASE_DIR)
-from Encoder_Decoder import *
+from EncoderDecoder import *
 from functools import partial
 device0 = torch.device("cpu")
 

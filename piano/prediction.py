@@ -233,7 +233,7 @@ set_seed(123)
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 device0 = torch.device("cpu")
 
-train_atom_loader, train_res_loader, ava_sample, train_seq_loader, train_seq_mut_loader = data_create_loader_regression('DStruData') 
+train_atom_loader, train_res_loader, ava_sample, train_seq_loader, train_seq_mut_loader = data_create_loader_regression('DStructData') 
 
 model = RegressionModel(
     a_num_feature=args.a_num_feature,

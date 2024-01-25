@@ -54,7 +54,7 @@ os.system('python piano/features.py')
 print('FeatureExtraction Finished!')
 
 print('Structural data sample generation......')
-os.system('python piano/DownstreamDataGeneration_stru.py')
+os.system('python piano/DownstreamDataGeneration_struct.py')
 print('Structural data sample generation Finished!')
 
 print('Sequence data sample generation......')

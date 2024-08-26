@@ -52,7 +52,7 @@ conda activate piano
 If you want to obtain the prediction results of a single sample, directly execute the following command on the command line to obtain the prediction results, and the results are saved in the PredictedResults.txt:
 
 ```bash
-python run.py 0 [pdb name] [mut_chain] [wildtype] [mutant] [resid] [partnerA_partnerB]
+python run.py c 0 [pdb name] [mut_chain] [wildtype] [mutant] [resid] [partnerA_partnerB]
 ```
 
 where the digit 0 signifies that the program performs predictions for individual samples only. \[pdb name] is the name of the complex to be predicted, such as 1a4y. \[mut\_chain] is the name of the mutated chain. \[wildtype], \[mutant], and \[resid] are wild-type amino acid, mutant amino acid, and the mutation position, respectively. \[partnerA\_partnerB] describes the two interaction partners in the protein complex, such as A\_B.
@@ -60,13 +60,18 @@ where the digit 0 signifies that the program performs predictions for individual
 A specific example is:
 
 ```bash
-python run.py 0 1a4y A E A 401 A_B
+python run.py c 0 1a4y A E A 401 A_B
 ```
 
 If you want to perform batch prediction of multiple samples, please first organize the relevant mutation sample data in pred\_data.csv. The input format is consistent with the data format within an individual sample. After the completion of filling in pred\_data.csv, execute the following command in the command line to obtain the prediction results. The results are saved in the PredictedResults.txt:
 
 ```bash
-python run.py 1
+python run.py c 1
 ```
 
 where the digit 1 indicates that the program conducts predictions for multiple samples.
+Additionally, if prediction for samples requires the input of monomeric structures, the prediction results can be obtained by executing the following command in the command line. The results will be saved in the predicted_results.txt:
+```bash
+python run.py m [apo mutation chain] [apo partner chain] [mut_chain] [wildtype] [mutant] [resid]
+python run.py m 1a4y_A 1a4y_B A E A 401
+```

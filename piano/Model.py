@@ -58,7 +58,41 @@ def clean_coords(x_init, flag, isdual):
             x29 = get_std_init(x[:, 53:54], 8)
             x = torch.cat([x[:, :42], x21, x22, x23, x24, x25, x26, x27, x28, x[:, 50:53], x29, x[:, 54:]], 1)
     return x
+def clean_coords_m(x_init, flag, isdual):
+    if isdual:
+        if flag == 'atom':
+            x = torch.cat([x_init[:, :4], x_init[:, 7:]], 1)
+            # x = torch.cat([x[:, :4], get_std(x[:, 4:5]), x[:, 5:]], 1)
+        else:
+            x = torch.cat([x_init[:, :79], x_init[:, 82:]], 1)
+            x21 = get_std(x[:, 22:23], 0)
+            x22 = get_std(x[:, 23:24], 1)
+            x23 = get_std(x[:, 24:25], 2)
+            x24 = get_std(x[:, 25:26], 3)
+            x25 = get_std(x[:, 26:27], 4)
+            x26 = get_std(x[:, 27:28], 5)
+            x27 = get_std(x[:, 28:29], 6)
 
+            x = torch.cat([x[:, :22], x21, x22, x23, x24, x25, x26, x27, x[:, 29:]], 1)
+    else:
+        if flag == 'atom':
+
+            x = torch.cat([x_init[:, :5], x_init[:, 8:]], 1)
+            x = torch.cat([x[:, :4], get_std_init(x[:, 4:5], 0), x[:, 5:]], 1)
+        else:
+
+            x = torch.cat([x_init[:, :104], x_init[:, 107:]], 1)
+            x21 = get_std_init(x[:, 42:43], 0)
+            x22 = get_std_init(x[:, 43:44], 1)
+            x23 = get_std_init(x[:, 44:45], 2)
+            x24 = get_std_init(x[:, 45:46], 3)
+            x25 = get_std_init(x[:, 46:47], 4)
+            x26 = get_std_init(x[:, 47:48], 5)
+            x27 = get_std_init(x[:, 48:49], 6)
+            x28 = get_std_init(x[:, 49:50], 7)
+            x29 = get_std_init(x[:, 53:54], 8)
+            x = torch.cat([x[:, :42], x21, x22, x23, x24, x25, x26, x27, x28, x[:, 50:53], x29, x[:, 54:]], 1)
+    return x
 
 def get_edge_std(x_init, flag):
     if flag == 'atom':
@@ -151,3 +185,111 @@ class RegressionModel(torch.nn.Module):
 
         return x
 
+
+class RegressionModel_m(torch.nn.Module):
+    def __init__(self,
+                 a_num_feature,
+                 r_num_feature,
+                 a_e_dim,
+                 r_e_dim,
+                 mid_dim=512,
+                 output_dim=1024,
+                 num_stacks=8,
+                 num_layers=4,
+                 de_num_stacks=8,
+                 de_num_layers=4,
+                 hidden_size=64,
+                 nheads=8,
+                 d_output_dim=256,
+                 ):
+        super(RegressionModel_m, self).__init__()
+
+        # ARMA
+        self.atom_encoder = Encoder(a_num_feature, a_e_dim, 32, 64, 2, 2)
+        self.atom_encoderB = Encoder(a_num_feature, a_e_dim, 32, 64, 2, 2)
+        
+        self.res_encoder = Encoder_transformer(r_num_feature, mid_dim, output_dim, nheads, e_dim=r_e_dim, droupt=0.2) # 512
+        self.res_encoder_B = Encoder_transformer(r_num_feature, mid_dim, output_dim, nheads, e_dim=r_e_dim, droupt=0.2) # 512
+        self.seq_encoder = SeqEncoder()
+        self.seq_encoder_mut = SeqEncoder()
+       
+        self.pool_mid = AtomPooling_SA(64, 64)
+
+        self.sumpool = SelfAttentionPooling(1088, 1088)
+
+        self.avgpool = torch.nn.AdaptiveAvgPool1d(1)
+
+        self.FC1 = torch.nn.Linear(1600, 512)
+        self.bn1 = torch.nn.BatchNorm1d(512)
+        self.FC2 = torch.nn.Linear(512, 256)
+        self.FC3 = torch.nn.Linear(256, 1)
+
+    def forward(self, x_atom, edge_index_atom, edge_attr_atom,x_atomB, edge_index_atomB, edge_attr_atomB, x_res, edge_index_res, edge_attr_res,x_resB, edge_index_resB, edge_attr_resB,
+                index, indexB, mut_list, x_seq, e_seq, x_seq_mut, e_seq_mut, mut_num_list_seq):
+
+        x_atom = clean_coords_m(x_atom, 'atom', False)
+        x_res = clean_coords_m(x_res, 'res', False)
+        x_atomB = clean_coords_m(x_atomB, 'atom', False)
+        x_resB = clean_coords_m(x_resB, 'res', False)
+
+
+
+        x_atom = self.atom_encoder(x_atom, edge_index_atom, edge_attr_atom)
+        x_atomB = self.atom_encoderB(x_atomB, edge_index_atomB, edge_attr_atomB)
+        
+
+        x_res = self.res_encoder(x_res, edge_index_res, edge_attr_res)
+        x_resB = self.res_encoder_B(x_resB, edge_index_resB, edge_attr_resB)
+        
+
+        x_seq = self.seq_encoder(x_seq)
+        x_seq_mut = self.seq_encoder_mut(x_seq_mut)
+
+        x_atom_m = x_atom
+        for i in range(len(index)):
+            p_x_atom = self.pool_mid(x_atom, index[i])
+            if i == 0:
+                x_atom_m = p_x_atom
+            else:
+                x_atom_m = torch.cat((x_atom_m,  p_x_atom), dim=0)
+
+        x_res = torch.cat((x_atom_m, x_res), dim=1)
+
+        x_atom_m = x_atomB
+        for i in range(len(indexB)):
+            p_x_atom = self.pool_mid(x_atomB, indexB[i])
+            if i == 0:
+                x_atom_m = p_x_atom
+            else:
+                x_atom_m = torch.cat((x_atom_m,  p_x_atom), dim=0)
+
+        x_resB = torch.cat((x_atom_m, x_resB), dim=1)
+
+        x = x_res
+        x_mut = x[mut_list[0], :]
+        x_mut = x_mut.view(1, 1088)
+        for i in range(1, len(mut_list)):
+            pre_x = x[mut_list[i], :]
+            pre_x = pre_x.view(1, 1088)
+            x_mut = torch.cat([x_mut, pre_x], 0)
+        # x_mut = x_mut.view(1, 512)
+        # print()
+        if len(mut_list) != 1:
+            x_mut = self.avgpool(x_mut.T)
+        x = x_mut
+        x = x.view(1, 1088)
+        x_resB = self.sumpool(x_resB)
+
+        x += x_resB
+
+
+        x_seq = x_seq - x_seq_mut
+        x = torch.cat([x, x_seq], 1)
+
+        x = self.FC1(x)
+        x = F.tanh(x)
+        x = self.FC2(x)
+        # x = F.tanh(x)
+        x = self.FC3(x)
+
+        return x

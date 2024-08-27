@@ -90,9 +90,6 @@ def get_pdb_seq_bio(pdb_name, pdb_file):
     return ans, serial_dict
 def readFa(fa):
     '''
-    @msg: 读取一个fasta文件
-    @param fa {str}  fasta 文件路径
-    @return: {generator} 返回一个生成器，能迭代得到fasta文件的每一个序列名和序列
     '''
     with open(fa,'r') as FA:
         seqName,seq='',''

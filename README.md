@@ -53,7 +53,7 @@ To obtain the prediction results for a single sample, execute the following comm
 python run.py c 0 [pdb name] [mut_chain] [wildtype] [mutant] [resid] [partnerA_partnerB]
 ```
 
-where `0` indicates that the program will only perform predictions for individual samples. `c` specifies the input pattern for complex structures. `[pdb_name]` is the name of the complex to be predicted (e.g., 1a4y). `[mut_chain]` refers to the chain containing the mutation. `[wildtype]`, `[mutant]`, and `[resid]` represent the wild-type amino acid, mutant amino acid, and mutation position, respectively. `[partnerA_partnerB]` describes the two interacting partners in the protein complex, such as A\_B.
+where `0` indicates that the program will only perform predictions for individual samples. `c` refers the input of a complex structure. `[pdb_name]` is the name of the complex to be predicted (e.g., 1a4y). `[mut_chain]` refers to the chain containing the mutation. `[wildtype]`, `[mutant]`, and `[resid]` represent the wild-type amino acid, mutant amino acid, and mutation position, respectively. `[partnerA_partnerB]` describes the two interacting partners in the protein complex, such as A\_B.
 
 A specific example is:
 
@@ -66,10 +66,10 @@ To perform batch predictions for multiple samples, first organize the relevant m
 ```bash
 python run.py c 1
 ```
-where `1` indicates that the program is set to perform predictions for multiple samples.`c` specifies the input pattern for complex structures.
+where `1` indicates that the program is set to perform predictions for multiple samples.`c` refers the input of a complex structure.
 Additionally, if using monomer structures as input, you can obtain the prediction results by executing the following command in the terminal. The results will be saved in `predicted_results.txt`.
 ```bash
 python run.py m [apo mutation chain] [apo partner chain] [mut_chain] [wildtype] [mutant] [resid]
 python run.py m 1a4y_A 1a4y_B A E A 401
 ```
-where `m` specifies the input pattern for monomer structures.`[apo mutation chain]` indicates the monomer structure of the mutated chain, while `[apo partner chain]` indicates the monomer structure of the partner chain.
+where `m` refers the input of monomer structures.`[apo mutation chain]` indicates the monomer structure of the mutated chain, while `[apo partner chain]` indicates the monomer structure of the partner chain.

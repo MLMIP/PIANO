@@ -66,7 +66,7 @@ To perform batch predictions for multiple samples, first organize the relevant m
 ```bash
 python run.py c 1
 ```
-where 1 indicates that the program is set to perform predictions for multiple samples.`c` specifies the input pattern for complex structures.
+where `1` indicates that the program is set to perform predictions for multiple samples.`c` specifies the input pattern for complex structures.
 Additionally, if using monomer structures as input, you can obtain the prediction results by executing the following command in the terminal. The results will be saved in `predicted_results.txt`.
 ```bash
 python run.py m [apo mutation chain] [apo partner chain] [mut_chain] [wildtype] [mutant] [resid]

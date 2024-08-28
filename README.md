@@ -72,4 +72,4 @@ Additionally, if using monomer structures as input, you can obtain the predictio
 python run.py m [apo mutation chain] [apo partner chain] [mut_chain] [wildtype] [mutant] [resid]
 python run.py m 1a4y_A 1a4y_B A E A 401
 ```
-where `m` specifies the input pattern for monomer structures
+where `m` specifies the input pattern for monomer structures.`[apo mutation chain]` indicates the monomer structure of the mutated chain, while `[apo partner chain]` indicates the monomer structure of the partner chain.
